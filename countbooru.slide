@@ -1,0 +1,68 @@
+16:9
+version:1.1
+fontname:Inter
+heading:Minimal Multi-Counter Animated GIF Hit Counter
+subheading:Next.js + Vercel + Upstash Redis
+paragraph-01:
+heading-02:Project structure
+codeblock-01:|bin/
+├── postflight
+
+pages/
+├── _app.tsx
+├── api
+│   └── counter
+│       └── [slug].ts   ← main hit counter
+└── index.tsx           ← tiny landing page
+
+public/
+├── 0.gif
+... 0..9.gif    ← digit sprites (24×32 each)
+
+.env                   ← UPSTASH_REDIS_REST_URL/_TOKEN
+next.config.mjs
+package.json
+tsconfig.json
+vercel.json
+readme.md
+paragraph-02:Each request to /¥{anything¥}.gif is routed to the [slug] API route which turns the path into a Redis key, increments it with INCR, renders the digits from the public GIF sprites, and returns image/gif.
+paragraph-03:
+heading-03:Quick deploy to Vercel
+paragraph-04:
+  1. Install dependencies: npm install
+  2. Set environment variables UPSTASH_REDIS_REST_URL and
+     UPSTASH_REDIS_REST_TOKEN in Vercel project settings
+     (copy both from the database page in the Upstash console).
+  3. Add your digit GIFs into /public/ as 0.gif .. 9.gif.
+  4. Deploy: vercel --prod
+paragraph-05:
+  Test locally: npm run dev
+  Then visit http://localhost:3000/ken/profile-views.gif
+paragraph-06:
+heading-04:How paths map to Redis keys
+table-01:|Requested path                       → Redis key
+/ken/profile-views.gif                → ken:profile-views
+/ken/commits.gif                      → ken:commits
+/project/downloads.gif                → project:downloads
+/foo/bar/baz.gif                      → foo:bar:baz
+paragraph-07:
+heading-05:Environment variables
+paragraph-08:|Variable                  Required   Description
+UPSTASH_REDIS_REST_URL       yes       Upstash Redis REST URL (https://...upstash.io)
+UPSTASH_REDIS_REST_TOKEN     yes       Upstash Redis REST token
+paragraph-09:
+heading-06:Notes / tradeoffs
+paragraph-10:
+  • Sprites can have any size, frame count or loop speed: each character keeps
+    its own timing, and the transparent background of each sprite is preserved.
+    The transparent index is written as white so viewers that flatten GIF
+    transparency still show the characters on white, not on a black box.
+  • gif-encoder is pure JS; if you can’t use canvas on Vercel, npm i gif-encoder
+    and swap the encoder import — both expose the same API in these examples.
+  • If you want the public-ingest variant (no API route, just static files +
+    middleware), see the extra section at the bottom.
+paragraph-11:
+  • This is deliberately minimal: no auth, no dashboard, no rate limits,
+    no cache layer. Add those later if you need them.
+paragraph-12:
+nextflow-right:

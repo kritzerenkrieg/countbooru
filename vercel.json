@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/:slug+.gif",
+      "destination": "/api/counter/:slug"
+    }
+  ]
+}
