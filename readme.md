@@ -1,6 +1,14 @@
-Minimal multi-counter animated GIF hit counter
-Live Demo: https://countbooru.vercel.app/
-limited api hits, recommended to host yourself, NOW!
+# COUNTBOORU
+endpoint hit based animated counter, supported on github profile, embedded images, etc
+
+### Live Demo: https://countbooru.vercel.app/
+
+limited api hits, recommended to:
+
+### host yourself, NOW!
+
+current repo hits:
+![Repo Counter](https://countbooru.vercel.app/countbooru/repo/hit.gif)
 
 Stack
 - Next.js (Pages Router, Node.js runtime)
