@@ -3,6 +3,10 @@
     {
       "source": "/:slug+.gif",
       "destination": "/api/counter/:slug"
+    },
+    {
+      "source": "/:slug+",
+      "destination": "/api/counter/:slug"
     }
   ]
 }

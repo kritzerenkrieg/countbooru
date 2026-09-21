@@ -11,10 +11,14 @@ const nextConfig = {
   },
   // Same rewrite as vercel.json, but applied by `next dev` / `next start` too
   // (vercel.json rewrites are only applied by the Vercel platform or `vercel dev`).
-  // "/ken/profile-views.gif" -> "/api/counter/ken/profile-views"
+  // Rewrites are matched in definition order, so the more specific `.gif` rule
+  // comes first. Both forms below hit the counter:
+  //   /ken/profile-views.gif  -> /api/counter/ken/profile-views
+  //   /ken/profile-views      -> /api/counter/ken/profile-views   (fallback)
   async rewrites() {
     return [
       { source: "/:slug(.+)\\.gif", destination: "/api/counter/:slug" },
+      { source: "/:slug(.+)", destination: "/api/counter/:slug" },
     ];
   },
 };

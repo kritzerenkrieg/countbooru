@@ -10,6 +10,12 @@ limited api hits, recommended to:
 current repo hits:
 ![Repo Counter](https://countbooru.vercel.app/countbooru/repo/hit.gif)
 
+`.gif` is optional — both `/{slug}` and `/{slug}.gif` work, so GitHub profile
+READMEs and other embed contexts can use the extensionless form. The project's
+own homepage embeds a live counter at `/homepage.gif`:
+
+![Homepage counter](https://countbooru.vercel.app/homepage.gif)
+
 Stack
 - Next.js (Pages Router, Node.js runtime)
 - Upstash Redis (INCR for atomic counters)
